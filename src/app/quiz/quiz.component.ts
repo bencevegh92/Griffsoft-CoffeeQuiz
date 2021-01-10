@@ -1,3 +1,4 @@
+import { GetQuestionService } from './../service/get-questions.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quiz.component.scss'],
 })
 export class QuizComponent implements OnInit {
-  question = 'This will be the question by the API';
+  question: string = '';
+  serverAnswer: string = '';
+  questions: Object = [];
+
+  index = 0;
 
   categories = [
     { name: 'Random', id: 1 },
@@ -16,9 +21,23 @@ export class QuizComponent implements OnInit {
     { name: 'Movies', id: 4 },
   ];
 
-  constructor() {}
+  constructor(private QuestionService: GetQuestionService) {}
 
   ngOnInit(): void {
+    this.getRandomQuestion();
+  }
+
+  getRandomQuestion() {
+    this.QuestionService.getRandomQuestions().subscribe((response) => {
+      this.questions = response;
+      console.log(response);
+      this.separateQuestion();
+    });
+  }
+
+  separateQuestion() {
+    this.question = this.questions[this.index].question;
+    this.serverAnswer = this.questions[this.index].answer;
   }
 
 }
