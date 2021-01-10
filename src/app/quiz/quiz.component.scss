@@ -1,0 +1,42 @@
+.Quiz__Select {
+    background-color: #ed2f26;
+    border: none;
+    outline: none;
+    color: #222;
+    font-weight: bold;
+}
+.Quiz__Form {
+    background-color: #ed2f26;
+    color: #222;
+    border-radius: 20px;
+    .Quiz__AnswerGroup {
+        margin: 0 auto;
+        .Quiz__AnswerInput {
+            background-color: bisque;
+            border: none;
+            outline: none;
+            color: #222;
+            font-weight: bold;
+            &:focus {
+                box-shadow: none;
+                background-color: #222;
+                color: #ed2f26;
+            }
+            &::placeholder {
+                color: #222;
+            }
+        }
+    }
+    .Quiz__NewQuestionImg {
+        position: absolute;
+        left: 1vw;
+    }
+    .Quiz__btn {
+        background-color: bisque;
+        font-weight: bold;
+    }
+    .Quiz__helpImg {
+        position: absolute;
+        right: 1vw;
+    }
+}
