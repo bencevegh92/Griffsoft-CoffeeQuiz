@@ -1,8 +1,10 @@
+<!-- Select Category -->
 <div class="form-group">
   <label for="exampleFormControlSelect1">Select Catergory</label>
   <select
     class="form-control Quiz__Select"
     id="exampleFormControlSelect1"
+    (change)="selectCategory($event.target.value)"
   >
     <option
       *ngFor="let category of categories"
@@ -13,32 +15,50 @@
     </option>
   </select>
 </div>
-<div class="text-center mt-5 p-4 Quiz__Form">
+<!-- Quiz Form Area -->
+<div class="text-center mt-5 mb-5 p-4 Quiz__Form">
+  <!-- Quiz Question -->
   <div class="form-group">
     <h3 class="">{{ question }}</h3>
   </div>
+    <!-- Quiz User Answer -->
   <div class="form-group col-lg-6 Quiz__AnswerGroup">
     <input
+      [(ngModel)]="userAnswer"
+      *ngIf="!isHelpRequred"
       type="text"
       class="form-control text-center Quiz__AnswerInput"
       placeholder="Your answer"
+    />
+    <!-- Help Input |Initially:Hidden| -->
+    <input
+      type="text"
+      *ngIf="isHelpRequred"
+      [value]="serverAnswer"
+      class="form-control text-center Quiz__AnswerInput"
+      placeholder="Your answer"
+      (click)="showAnswer()"
     />
     <small class="form-text"
       >We'll never share your answer with anyone else.</small
     >
   </div>
+  <!-- Buttons -->
   <div class="d-flex justify-content-around mt-4 mb-4 position-relative">
-    <a href="#" class="Quiz__NewQuestionImg"
+    <!-- Get new question -->
+    <a href="#" class="Quiz__NewQuestionImg" (click)="nextQuestion()"
       ><img
         src="../../assets/newQuestion.png"
         alt=""
         class="img-responsive"
         style="height: 50px"
     /></a>
-    <button type="button" class="btn Quiz__btn">
+    <!-- Submit -->
+    <button type="button" class="btn Quiz__btn" (click)="onSubmit()">
       Submit
     </button>
-    <a href="#" class="Quiz__helpImg"
+    <!-- Helper Button -->
+    <a href="#" class="Quiz__helpImg" (click)="showAnswer()"
       ><img
         src="../../assets/help.png"
         alt=""
@@ -46,4 +66,17 @@
         style="height: 50px"
     /></a>
   </div>
+</div>
+
+<!-- Display Component if... -->
+<div *ngIf="hasAnswer">
+  <!-- If The userAnswer was correct -->
+  <app-correct *ngIf="isCorrect"></app-correct>
+  <!-- If The userAnswer was wrong -->
+  <app-wrong *ngIf="!isCorrect"></app-wrong>
+</div>
+
+<!-- Add loading spinner -->
+<div *ngIf="isLoading" class="d-flex justify-content-around m-4">
+  <mat-spinner color="warn"></mat-spinner>
 </div>
