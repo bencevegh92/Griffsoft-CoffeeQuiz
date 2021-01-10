@@ -12,6 +12,6 @@ export class GetQuestionService {
   }
 
   getQuestionByCategory(id: number) {
-    return this.http.get('http://jservice.io/api/category?id=' + id);
+    return this.http.get(`http://jservice.io/api/category?id=${id}`);
   }
 }
